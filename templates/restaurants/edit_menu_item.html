@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Menu Item - Meal Buddy{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card p-4">
+            <h2 class="text-center mb-4">Edit Menu Item</h2>
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="meal_name" class="form-label">Meal Name</label>
+                    <input type="text" name="meal_name" class="form-control" id="meal_name" value="{{ item.meal_name }}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea name="description" class="form-control" id="description" rows="2">{{ item.description }}</textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="cost" class="form-label">Cost</label>
+                    <input type="number" step="0.01" name="cost" class="form-control" id="cost" value="{{ item.cost }}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="image_url" class="form-label">Item Picture URL</label>
+                    <input type="url" name="image_url" class="form-control" id="image_url" value="{{ item.image_url }}">
+                </div>
+                <div class="mb-4 form-check">
+                    <input type="checkbox" name="is_veg" class="form-check-input" id="is_veg" {% if item.is_veg %}checked{% endif %}>
+                    <label class="form-check-label" for="is_veg">Is Vegetarian?</label>
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Save Item Changes</button>
+                    <a href="{% url 'view_menu' item.name %}" class="btn btn-outline-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

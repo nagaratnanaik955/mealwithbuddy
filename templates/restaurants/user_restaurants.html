@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Restaurants - Meal Buddy</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+    body, html { height: 100%; margin: 0; font-family: 'Outfit', sans-serif; }
+    .bg-image { background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url("{% static 'images/background.png' %}"); min-height: 100%; background-position: center; background-repeat: no-repeat; background-size: cover; display: flex; flex-direction: column; align-items: center; padding-top: 5rem; }
+    .welcome-header { font-size: 3rem; font-weight: 800; color: #1e293b; margin-bottom: 2rem; }
+    .table-card { background: white; border-radius: 0.8rem; box-shadow: 0 10px 30px rgba(0,0,0,0.05); width: 90%; max-width: 1200px; overflow: hidden; margin-bottom: 3rem; }
+    .table thead th { background-color: #f1f4f9; color: #64748b; text-transform: uppercase; font-size: 0.85rem; font-weight: 700; padding: 1.5rem; border: none; }
+    .table tbody td { padding: 2rem 1.5rem; vertical-align: middle; border-bottom: 1px solid #f1f4f9; color: #334155; }
+    .restaurant-img { width: 130px; height: 130px; object-fit: contain; border: 1px solid #f1f5f9; padding: 5px; border-radius: 4px; }
+    .view-menu-link { color: #2563eb; font-weight: 700; text-decoration: none; font-size: 1rem; }
+    .view-menu-link:hover { text-decoration: underline; }
+    .nav-links { margin-bottom: 2rem; font-weight: 700; }
+    .nav-links a { margin: 0 20px; color: #64748b; text-decoration: none; }
+</style>
+</head>
+<body>
+    <div class="bg-image">
+        <h1 class="welcome-header">Welcome {{ user.username }}!</h1>
+        <div class="table-card">
+            <table class="table text-center">
+                <thead>
+                    <tr>
+                        <th>RESTAURANT NAME</th>
+                        <th>PICTURE</th>
+                        <th>CUISINE</th>
+                        <th>RATING</th>
+                        <th>OPERATIONS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for restaurant in restaurants %}
+                    <tr>
+                        <td class="fw-bold">{{ restaurant.name }}</td>
+                        <td><img src="{{ restaurant.logo_url }}" class="restaurant-img"></td>
+                        <td>{{ restaurant.cuisine_type }}</td>
+                        <td class="fw-bold">{{ restaurant.avg_rating|default:5.0|floatformat:1 }}</td>
+                        <td>
+                            <a href="{% url 'view_menu' restaurant.name %}" class="view-menu-link">View Menu</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5">No restaurants available.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

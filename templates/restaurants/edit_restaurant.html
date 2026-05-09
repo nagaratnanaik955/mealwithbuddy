@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Restaurant - Meal Buddy{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card p-4">
+            <h2 class="text-center mb-4">Edit Restaurant Info</h2>
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="name" class="form-label">Restaurant Name</label>
+                    <input type="text" name="name" class="form-control" id="name" value="{{ restaurant.name }}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="cuisine_type" class="form-label">Cuisine Type</label>
+                    <input type="text" name="cuisine_type" class="form-control" id="cuisine_type" value="{{ restaurant.cuisine_type }}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="logo_url" class="form-label">Logo URL</label>
+                    <input type="url" name="logo_url" class="form-control" id="logo_url" value="{{ restaurant.logo_url }}">
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <a href="{% url 'view_restaurants' %}" class="btn btn-outline-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
